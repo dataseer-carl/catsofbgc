@@ -4,6 +4,10 @@
 # project-name
 Short description from GitHub
 
+## Data dump
+
+Location of `data://` [here](https://goo.gl/d6MPss).
+
 ## Data sources
 
 ### Raw
@@ -17,6 +21,8 @@ Parsed data files.
 
 | Dataset | Data File | Description | Columns | Rows | Input Data | Data Processing Scripts |
 |:--|:--|:--|--:|--:|:--|:--|
+| Raw IG data as of 2018-02-26 | `ig raw.json` | Raw IG data as of 2018-02-26 |  |  |  | `ig_cats.py` |
+| Shortlisted IG data as of 2018-02-26 | `cats_of_bgc.h5` | Raw IG data as of 2018-02-26 |  |  |  | `ig_cats.py` |
 
 ## Work Products
 
