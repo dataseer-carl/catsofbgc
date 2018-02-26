@@ -42,7 +42,7 @@ def ig_link(code):
     return f'https://www.instagram.com/p/{code}/'
 
 
-for c, post in enumerate(cat_posts):
+for post in cat_posts:
     if post['caption'] is not None:
         text = post['caption']['text']
         time = dt.utcfromtimestamp(post['caption']['created_at_utc'])
