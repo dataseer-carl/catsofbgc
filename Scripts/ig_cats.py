@@ -1,5 +1,6 @@
 from InstagramAPI import InstagramAPI
 from datetime import datetime as dt
+import json
 import pandas as pd
 import time
 
@@ -25,6 +26,11 @@ if 'cat_posts' not in globals():
         max_id = ig_api.LastJson.get('next_max_id', '')
         cat_posts.extend(ig_api.LastJson['items'])
         time.sleep(2)
+
+cat_dict = {c: post for c, post in enumerate(cat_posts)}
+
+with open('ig_raw.json', 'w') as raw:
+    raw.write(json.dumps(cat_dict))
 
 texts = []
 links = []
