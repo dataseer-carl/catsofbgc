@@ -1,5 +1,7 @@
 from InstagramAPI import InstagramAPI
 from datetime import datetime as dt
+import json
+import os.path
 import pandas as pd
 import time
 
@@ -26,6 +28,11 @@ if 'cat_posts' not in globals():
         cat_posts.extend(ig_api.LastJson['items'])
         time.sleep(2)
 
+cat_dict = {c: post for c, post in enumerate(cat_posts)}
+
+with open('ig_raw.json', 'w') as raw:
+    raw.write(json.dumps(cat_dict))
+
 texts = []
 links = []
 times = []
@@ -50,8 +57,12 @@ for c, post in enumerate(cat_posts):
     times.append(time)
     links.append(ig_link(post['code']))
 
-main_df = pd.DataFrame({
+main_ig_df = pd.DataFrame({
     'text': texts,
     'time': times,
     'link': links
 })
+
+if not os.path.isfile('cats_of_bgc.h5'):
+    with pd.HDFStore('cats_of_bgc.h5') as hdf:
+        hdf.put(key='ig', value=main_ig_df)
