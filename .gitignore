@@ -1,2 +1,7 @@
 Data/ # Ignore cache of data
 .Rproj.user
+*.html # Preview of readme.md
+
+# Ignore Sublime files
+.sublime-workspace
+.sublime-project
