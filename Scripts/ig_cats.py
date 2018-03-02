@@ -66,6 +66,5 @@ main_ig_df = pd.DataFrame({
     'link': links
 })
 
-if not os.path.isfile('cats_of_bgc.h5'):
-    with pd.HDFStore('cats_of_bgc.h5') as hdf:
-        hdf.put(key='ig', value=main_ig_df)
+with pd.HDFStore('cats_of_bgc.h5') as hdf:
+    hdf.put(key='ig', value=main_ig_df)
