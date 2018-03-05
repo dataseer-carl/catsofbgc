@@ -17,8 +17,10 @@ if 'cat_posts' not in globals():
     cat_posts = []
     has_more_posts = True
     max_id = ""
+    count = 1
 
     while has_more_posts:
+        print(f'{count}: Downloading Data...')
         ig_api.getHashtagFeed('catsofbgc', maxid=max_id)
         if ig_api.LastJson['more_available'] is not True:
             has_more_posts = False
@@ -27,6 +29,7 @@ if 'cat_posts' not in globals():
         max_id = ig_api.LastJson.get('next_max_id', '')
         cat_posts.extend(ig_api.LastJson['items'])
         time.sleep(2)
+        count += 1
 
 cat_dict = {c: post for c, post in enumerate(cat_posts)}
 
@@ -42,7 +45,7 @@ def ig_link(code):
     return f'https://www.instagram.com/p/{code}/'
 
 
-for c, post in enumerate(cat_posts):
+for post in cat_posts:
     if post['caption'] is not None:
         text = post['caption']['text']
         time = dt.utcfromtimestamp(post['caption']['created_at_utc'])
@@ -52,7 +55,7 @@ for c, post in enumerate(cat_posts):
         time = dt.utcfromtimestamp(
             post['preview_comments'][0]['created_at_utc']
         )
-
+    print(text)
     texts.append(text)
     times.append(time)
     links.append(ig_link(post['code']))
@@ -63,6 +66,5 @@ main_ig_df = pd.DataFrame({
     'link': links
 })
 
-if not os.path.isfile('cats_of_bgc.h5'):
-    with pd.HDFStore('cats_of_bgc.h5') as hdf:
-        hdf.put(key='ig', value=main_ig_df)
+with pd.HDFStore('cats_of_bgc.h5') as hdf:
+    hdf.put(key='ig', value=main_ig_df)
